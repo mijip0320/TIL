@@ -1,5 +1,6 @@
 import java.util.HashSet;
 import java.util.Set;
+//https://programmers.co.kr/learn/courses/30/lessons/42839
 
 public class PrimeNumber {
 
@@ -24,53 +25,53 @@ String numbers = "011";
 		 System.out.print(ans);
 	}
 	
-	public static void recursive(String[] n, int depth, int k, Set set) { //¼ıÀÚ Á¶ÇÕ
-		//detph: ÇöÀç ³» ¼ıÀÚ ±æÀÌ
-		//k : ¸¸µé ¼ıÀÚ ±æÀÌ
-		if(depth == k) {//¿øÇÏ´Â k°³ÀÇ ¼ıÀÚ°¡ ¼¼ÆÃµÆÀ¸¹Ç·Î ´õÀÌ»ó ¼ø¿­»ı¼ºX
+	public static void recursive(String[] n, int depth, int k, Set set) { //ìˆ«ì ì¡°í•©
+		//detph: í˜„ì¬ ë‚´ ìˆ«ì ê¸¸ì´
+		//k : ë§Œë“¤ ìˆ«ì ê¸¸ì´
+		if(depth == k) {//ì›í•˜ëŠ” kê°œì˜ ìˆ«ìê°€ ì„¸íŒ…ëìœ¼ë¯€ë¡œ ë”ì´ìƒ ìˆœì—´ìƒì„±X
 			print(n,k,set);
 			
-		}else { //¾ÆÁ÷ k¸¸Å­ ±æÀÌ »ı¼ºÀÌ µÇÁö ¾Ê¾ÒÀ» °æ¿ì
-			for(int i =depth; i<n.length; i++) { //depthÅÍ ¹®ÀÚ¿­ ±æÀÌ±îÁö µ¹¸é¼­ ¼ıÀÚ ±æÀÌ¸¦ ´Ã¸°´Ù
-				swap(n,i,depth); //ÀÌ¶§ ¼ıÀÚ Á¶ÇÕÀ» ¹Ù²Ş
-				recursive(n,depth+1,k,set); //¹Ù²ï Á¶ÇÔÀ¸·Î ´Ù½Ã Àç±Í·Î depth+1·Î È£Ãâ
-				//Àç±Í¸¦ °è¼Ó È£ÃâÇÏ´Ù if¹®¿¡ °É¸®°Ô µÇ¸é ¾Æ·¡ swapÀ¸·Î ³Ñ¾î°¨
-				swap(n,i,depth);//¼ıÀÚ Á¶ÇÕ ¿Ï¼º, ¿ø»óº¹±¸(¾ÈÇÏ¸é n »ç¿ë¿¡ ¹®Á¦¿¡ »ı±è)
+		}else { //ì•„ì§ kë§Œí¼ ê¸¸ì´ ìƒì„±ì´ ë˜ì§€ ì•Šì•˜ì„ ê²½ìš°
+			for(int i =depth; i<n.length; i++) { //depthí„° ë¬¸ìì—´ ê¸¸ì´ê¹Œì§€ ëŒë©´ì„œ ìˆ«ì ê¸¸ì´ë¥¼ ëŠ˜ë¦°ë‹¤
+				swap(n,i,depth); //ì´ë•Œ ìˆ«ì ì¡°í•©ì„ ë°”ê¿ˆ
+				recursive(n,depth+1,k,set); //ë°”ë€ ì¡°í•¨ìœ¼ë¡œ ë‹¤ì‹œ ì¬ê·€ë¡œ depth+1ë¡œ í˜¸ì¶œ
+				//ì¬ê·€ë¥¼ ê³„ì† í˜¸ì¶œí•˜ë‹¤ ifë¬¸ì— ê±¸ë¦¬ê²Œ ë˜ë©´ ì•„ë˜ swapìœ¼ë¡œ ë„˜ì–´ê°
+				swap(n,i,depth);//ìˆ«ì ì¡°í•© ì™„ì„±, ì›ìƒë³µêµ¬(ì•ˆí•˜ë©´ n ì‚¬ìš©ì— ë¬¸ì œì— ìƒê¹€)
 			}
 		}
 	}
 	
-	public static void swap(String[] n, int i, int j) { //¼ø¼­ Á¶ÇÕ ¹Ù²Ù±â ÇÔ¼ö
+	public static void swap(String[] n, int i, int j) { //ìˆœì„œ ì¡°í•© ë°”ê¾¸ê¸° í•¨ìˆ˜
 		String temp = n[i];
 		n[i] = n[j];
 		n[j] = temp;
 	}
 	
-	public static void print(String[] n, int k, Set set) { //¼ıÀÚ ¿¬°á
-		//StringBuilderÀÇ append ¸Ş¼Òµå¸¦ ÅëÇØ stringÀ» ¿¬°áÇÒ ¼ö ÀÖ´Ù.
+	public static void print(String[] n, int k, Set set) { //ìˆ«ì ì—°ê²°
+		//StringBuilderì˜ append ë©”ì†Œë“œë¥¼ í†µí•´ stringì„ ì—°ê²°í•  ìˆ˜ ìˆë‹¤.
 		StringBuilder s = new StringBuilder();
 		for(int i=0; i<k; i++) {
 			//System.out.print(n[i]);
-			s.append(n[i]); //¼ıÀÚ ¿¬°á
+			s.append(n[i]); //ìˆ«ì ì—°ê²°
 		}
 		
-		primeNumberCheck(set,s); //ÇØ´ç ¼ıÀÚ°¡ ¼Ò¼öÀÎÁö Ã¼Å©
+		primeNumberCheck(set,s); //í•´ë‹¹ ìˆ«ìê°€ ì†Œìˆ˜ì¸ì§€ ì²´í¬
 	}
 	
-	public static void primeNumberCheck(Set set, StringBuilder s) { //¼Ò¼ö Ã¼Å©
-		int num = Integer.parseInt(String.valueOf(s)); //ÀÔ·Â¹ŞÀº ¹®ÀÚ¸¦ Á¤¼ö·Î º¯È¯
-		boolean prime = true;  //¼Ò¼öÀÎÁö Ã¼Å©ÇØÁÖ´Â ºÒ¸®¾È(true·Î ÃÊ±âÈ­)
-		if(num<=1) { //1Àº ¼Ò¼ö°¡ ¾Æ´Ï±â¿¡ set¿¡ ÀúÀå x
+	public static void primeNumberCheck(Set set, StringBuilder s) { //ì†Œìˆ˜ ì²´í¬
+		int num = Integer.parseInt(String.valueOf(s)); //ì…ë ¥ë°›ì€ ë¬¸ìë¥¼ ì •ìˆ˜ë¡œ ë³€í™˜
+		boolean prime = true;  //ì†Œìˆ˜ì¸ì§€ ì²´í¬í•´ì£¼ëŠ” ë¶ˆë¦¬ì•ˆ(trueë¡œ ì´ˆê¸°í™”)
+		if(num<=1) { //1ì€ ì†Œìˆ˜ê°€ ì•„ë‹ˆê¸°ì— setì— ì €ì¥ x
 			System.out.println("Prime number is one");
 		}
 		
-		for(int i=2; i<=Math.sqrt(num); i++) { //ÀÔ·Â¹ŞÀº ¼ıÀÚÀÇ ·çÆ®°ª±îÁö ¼øÈ¸ÇÏ¸é¼­ ¼Ò¼öÀÎÁö ÆÇº°
-			if(num%1==0) { //³ª´²Áö¸é(³ª¸ÓÁö°¡ 0ÀÌ¸é) ¼Ò¼ö x, break;
+		for(int i=2; i<=Math.sqrt(num); i++) { //ì…ë ¥ë°›ì€ ìˆ«ìì˜ ë£¨íŠ¸ê°’ê¹Œì§€ ìˆœíšŒí•˜ë©´ì„œ ì†Œìˆ˜ì¸ì§€ íŒë³„
+			if(num%1==0) { //ë‚˜ëˆ ì§€ë©´(ë‚˜ë¨¸ì§€ê°€ 0ì´ë©´) ì†Œìˆ˜ x, break;
 				prime = false;
 				break;
 			}
 		}
-		if(prime) { //³ª´²Áö´Â °ªÀÌ ¾ø´Ù¸é ¼Ò¼öÀÌ¹Ç·Î set¿¡ Ãß°¡, Hashset¿¡¼­ Áßº¹À» °Å¸§.
+		if(prime) { //ë‚˜ëˆ ì§€ëŠ” ê°’ì´ ì—†ë‹¤ë©´ ì†Œìˆ˜ì´ë¯€ë¡œ setì— ì¶”ê°€, Hashsetì—ì„œ ì¤‘ë³µì„ ê±°ë¦„.
 			set.add(num);
 		}
 	}
