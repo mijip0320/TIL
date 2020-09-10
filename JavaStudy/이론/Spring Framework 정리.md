@@ -372,6 +372,7 @@
     <mapper namespace="userNS">
     
     	<!-- SqlMapConfig의 alias를 resultType에서 가져다가 씀 -->
+        <!-- parameterType: 구문에 전달될 파라미터의 패키지 경로를 포함한 전체 클래스명이나 별칭-->
     	<select id="selectUserById" parameterType="string" resultType="User">
     		select * from users where userid=#{value}
     	</select>
@@ -386,8 +387,8 @@
     		values(#{userId},#{name},#{gender},#{city} )
     	</insert>
     
-    ```
-
+```
+    
   - ```java
     //DataSourceTest.java
     @Test 
@@ -418,11 +419,52 @@
     		for (UserVO userVO : userList) {
     			System.out.println(userVO);
     		}
-    ```
-
-  - 
-
+  ```
+  
 
 
 
+## Mapper 인터페이스
+
+> Mapper 파일에 기재된 SQL을 호출하기 위한 인터페이스
+
+- 인터페이스 사용 하지 않았을 때: SQL을 호출하는 프로그램은 SqlSession의 메서드의 아규먼트에 문자열로 **네임스페이스+"."+SQL ID** 로 지정, 문자열로 지정되어 있기 때문에 버그가 숨겨져 있으면 사용 불가
+
+- 인터페이스 사용 했을 때: **패키지 이름+"."+인터페이스 이름+"."+메서드 이름**
+
+  - 네임스페이스 속성에는 패키지를 포함한 Mapper 인터페이스 이름
+  - SQL ID에는 매핑하는 메서드 이름을 지정
+
+- ```java
+  //Mapper 인터페이스
+  package myspring.user.dao.mapper;
+  import java.util.List;
+  
+  import org.apache.ibatis.annotations.Mapper;
+  import org.apache.ibatis.annotations.Param;
+  import org.apache.ibatis.annotations.Select;
+  
+  import myspring.user.vo.UserVO;
+  
+  //@MyMapper
+  //검색이 대상이 되는 Package 아래의 인터페이스들 중에서 Mapper로서 작성한 인터페이스로만 범위를 좁히려면 Marker 인터페이스와 Marker 인터페이스와 Marker 어노테이션을 작성하여 인터페이스임을 인식 
+  @Mapper
+  public interface UserMapper {
+  	//@Select("select * from users where userid=#{id}")
+  	//UserVO selectUserById(@Param("id") String id);
+  	UserVO selectUserById(String id);
+  	List<UserVO> selectUserList();
+  	void insertUser(UserVO userVO);
+  	void updateUser(UserVO userVO);
+  	void deleteUser(String id);
+  }
+  ```
+
+- ```xml
+  <!-- Mapper 파일 네임스페이스 변경-->
+  <!-- <mapper namespace="studentNS"> -->
+  <mapper namespace="myspring.user.dao.mapper.StudentMapper">
+  ```
+
+  
 
