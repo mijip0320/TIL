@@ -225,14 +225,6 @@
   - @GeneratedValue : 주 키의 값을 자동 생성하기 위해 명시하는 데 사용되는 어노테이션
 
   - ```java
-    package com.miji.myspringboot.entity;
-    
-    import javax.persistence.Column;
-    import javax.persistence.Entity;
-    import javax.persistence.GeneratedValue;
-    import javax.persistence.GenerationType;
-    import javax.persistence.Id;
-    
     @Entity
     public class Account {
     	//@Id-pk 설정, @GeneratedValue-자동 값 증가
@@ -325,7 +317,7 @@
     }
     
     ```
-
+  
 - Repository 인터페이스 :  AccountRepository의 구현체를 따로 작성하지 않아도 Spring-Data-JPA가 자동적으로 해당 문자열 username에 대한 인수를 받아 자동적으로 DB Table과 매핑
 
   - ```java
@@ -351,20 +343,6 @@
   - JPA 테스트: 
 
     ```java
-    package com.miji.myspringboot.repository;
-    
-    import java.util.List;
-    import java.util.Optional;
-    
-    import org.junit.Ignore;
-    import org.junit.Test;
-    import org.junit.runner.RunWith;
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.boot.test.context.SpringBootTest;
-    import org.springframework.test.context.junit4.SpringRunner;
-    
-    import com.miji.myspringboot.entity.Account;
-    
     @RunWith(SpringRunner.class)
     @SpringBootTest
     public class AccountRepositoryTest {
@@ -389,8 +367,282 @@
     }
     
     ```
-
     
+    
+  
+- Optional 객체 반환
+
+- > Optional는 “존재할 수도 있지만 않 할 수도 있는 객체”, 즉, ”null이 될 수도 있는 객체” 을 감싸 고 있는 일종의 래퍼 클래스
+
+  -  Java8은 함수형 언어의 접근 방식에서 영감을 받아 java.util.Optional라는 새로운 클래스를 도입함
+
+  -  명시적으로 해당 변수가 null일 수도 있다는 가능성을 표현할 수 있음. (따라서 불필요한 NullPointException 방어 로직을 줄일 수 있음)
+
+  - ```java
+    //AccountRepositoryTest.java
+    @Test @Ignore
+    	public void finder() {
+    		Account account = repository.findByUsername("lambda");
+    		System.out.println(account);
+    		Optional<Account> optional = repository.findById(100L);
+    		//System.out.println(optional.isPresent());
+    		
+    		if(optional.isPresent()) {
+    			Account account2 = optional.get();
+    			System.out.println(account2); 
+    		}
+    		Optional<Account> optEmail = repository.findByEmail("dooly@aaa.com");
+    		System.out.println(optEmail.isPresent());
+    		//Supplier의 함수형인터페이스 추상메서드: T get()
+            //람다식 사용
+    		Account account3 = optEmail.orElseThrow(() ->new RuntimeException("요청한 Email주소를 가진 Account가 없음"));
+    		System.out.println(account3);
+    		
+    		List<Account> accountList = repository.findAll(); //Iterable
+    		accountList.forEach(acct -> System.out.println(acct));
+    		accountList.forEach(System.out::println);
+    		
+    	}
+    ```
+
+  - ```java
+    //AccountRepository.java
+    import java.util.Optional;
+    public interface AccountRepository extends JpaRepository<Account, Long>{
+     Optional<Account> findByUsername(String username);
+    }
+    ```
 
   - 
+
+
+
+## 스프링 부트 웹 MVC
+
+> Spring MVC 설정을 개발자가 하지 않아도 내부에 spring-boot-autoconfigure.jar 파일에 포함된 META-INF 디렉토리 내에 spring.factories의org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration에서 WebMvc와 관련된 자동 설정 클래스가 적용
+
+- 스프링 부트가 제공해주는 웹MVC의 기능들을 확장하고 싶을 때 추가적으로 설정 파일을 만들면 됨
+
+- @RequestBody 어노테이션을 통한 HTTP 메세지와 객체 매핑 : 
+
+  - JsonMessageConverter
+    - HTTP 요청 본문을 Json객체로 변경하거나, Json객체를 HTTP 응답 본문으로 변겨알 때는 JsonMessageConverter가 사용됨
+      - ex) {"username":"vega2k", "password":"123"} <-> User
+    -  Controller에서 json 타입에 대한 정보를 명시하지 않아도 ContentNegotiatingViewResolver를 통해 자동적으로 json 형식으로 데이터를 반환하도록 스프링 부트에서 제공함
+  - @PostMapping: @GetMapping과 비슷하게 @RequestMapping(method=RequestMethod.POST)의 축약형
+
+- ```java
+  //entity/User.java
+  @Entity
+  public class User {
+  	@Id
+  	@GeneratedValue
+  	private Long id;
+  	@Column
+  	private String name;
+  	@Column(unique=true)
+  	private String email;
+  }
+  
+  ```
+
+- ```java
+  //RESTUserController.java
+  @PostMapping("/users")
+  	public User insert(@RequestBody User addUser) {
+  		return repository.save(addUser);
+  	}
+  	
+  	@GetMapping("/users")
+  	public List<User> getUsers() {
+  		return repository.findAll();
+  	}
+  	@RequestMapping(value = "/usersXml", produces = {"application/xml"} )
+  	public Users getUsersXml() {
+  		Users userXml = new Users();
+  		userXml.setUsers(repository.findAll());
+  		return userXml;
+  	}
+  @PutMapping("/users/{id}")
+  	public User updateUser(@PathVariable Long id, @RequestBody User userDetail) {
+  		User user= repository.findById(id).orElseThrow(()->new ResourceNotFoundException("User", "Id", id));
+  		//값을 변경
+  		user.setName(userDetail.getName());
+  		user.setEmail(userDetail.getEmail());
+  		//DB에 save()
+  		User updatedUser = repository.save(user);
+  		return updatedUser;
+  	}
+  	
+  	@DeleteMapping("/users/{id}")
+  	public ResponseEntity<?> deleteUser(@PathVariable Long id){
+  		Optional<User> optional = repository.findById(id);
+  		//요청한 id와 매핑하는 User가 없는 경우 (java 11에 추가)
+  		if(optional.isEmpty()) {
+  			return new ResponseEntity<>("요청한 User가 없습니다.",HttpStatus.NOT_FOUND);
+  		}
+  		//db에서 삭제 실행
+  		repository.deleteById(id);
+  		return new ResponseEntity<>(id+ "유저가 삭제 완료", HttpStatus.OK);
+  	}
+  ```
+
+- ```java
+  //사용자 정의 Exception class
+  @ResponseStatus(value = HttpStatus.NOT_FOUND)
+  public class ResourceNotFoundException extends RuntimeException {
+   private String resourceName;
+   private String fieldName;
+   private Object fieldValue;
+   public ResourceNotFoundException( String resourceName, String fieldName, Object fieldValue) {
+   super(String.format("%s not found with %s : '%s'", resourceName, fieldName, fieldValue));
+   this.resourceName = resourceName;
+   this.fieldName = fieldName;
+   this.fieldValue = fieldValue;
+   }
+   public String getResourceName() { return resourceName; }
+   public String getFieldName() { return fieldName; }
+   public Object getFieldValue() { return fieldValue; }
+  }
+  ```
+
+- WebMvcConfigurer를 통한 정적 리소스 매핑
+
+- ViewResolver : Controller에서 반환한 값(ModelAndView 혹은 Model)을 통해 뷰를 만드는 역할
+
+- ContentNegotiatingViewResolver:  동일한 URI에서 HTTP Request에 있는 Content-type 및 Accept 헤더를 기준으로 다양한 Content-type으로 응답할 수 있게 하는 ViewResolver
+
+  - ```java
+    @RestController
+    public class UserRestController {
+    	@RequestMapping(value="/users2", produces = {"application/xml"})
+    	public List<User> getUsers2() {
+    		return userRepository.findAll();
+    	}
+        /*결과: 
+        <List>
+     		<Item>
+     			<id>1</id>
+     			<name>홍길동</name>
+     			<email>test@aa.com</email>
+     			</Item>
+    	</List>
+    	*/
+        
+    @RequestMapping(value="/usersxml", produces = { "application/xml"})
+    public Users getUsersXml() {
+    	Users users = new Users();
+    	users.setUsers(userRepository.findAll());
+    	return users;
+    	}
+    }
+    
+    /*결과:
+    <Users>
+     <User id="1">
+     <name>홍길동</name>
+     <email>test@aa.com</email>
+     </User>
+    </Users>
+    */
+    ```
+
+  - ```java
+    @JacksonXmlRootElement
+    public class Users implements Serializable{
+    	private static final long serialVersionUID = 22L;
+    	
+    	@JacksonXmlProperty(localName="User") //<-추가됨, 루트 태그로 설정됨
+    	@JacksonXmlElementWrapper(useWrapping=false) //<-추가됨
+    	private List<User> users = new ArrayList<>();
+    	public void setUsers(List<User> users) {
+    		this.users = users;
+    	}
+    public List<User> getUsers() {
+    	return users;
+    	}
+    }
+    ```
+
+  - ```java
+    @Entity
+    public class User implements Serializable {
+    	private static final long serialVersionUID = 21L;
+    	
+    	@Id
+    	@GeneratedValue
+    	@JacksonXmlProperty(isAttribute = true)//<-추가됨
+    	private Long id;
+    	
+    	@JacksonXmlProperty//<-추가됨
+     	private String name;
+     	
+    	@JacksonXmlProperty//<-추가됨
+     	private String email;
+    
+    ```
+
+
+
+- 정적 리소스 지원 : 예) http://localhost:8080/hello.html
+
+  - classpath:/resources 형식으로 지원
+
+  - 정적 리소스 맵핑 설정 변경: 
+
+    - ```properties
+      spring.mvc.static-path-pattern=/static/**
+      #“/hello.html” => /static/hello.html
+      ```
+
+    - **WebMvcConfigurer**를 통한 정적 리소스 매핑: *addResourceHandlers* 메서드로 커스터마이징
+
+    - *addResourceHandlers*는 리소스 등록 및 핸들러를 관리하는 객체인 ResourceHandlerRegistry를 통해 리소스 위치와 이 리소스와 매칭될 url을 등록
+
+    - *setCachePeriod*는 캐시를 얼마나 지속할 지 정하는 메서드
+
+    - ```java
+      //config/WebConfig.java
+      @Configuration
+      public class WebConfiguration implements WebMvcConfigurer {
+      	@Override
+      	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+      		//해당 url 패턴(mm)을 매칭 ->mobile에 매칭됨
+      		registry.addResourceHandler("/mm/**") 
+      				// 반드시 디렉토리 이름(mobile) 다음에 / 을 주어야 한다.
+      				.addResourceLocations("classpath:/mobile/")
+      				.setCachePeriod(20);// 20초
+      		//localhost:8086/mm/mobile.html로 출력됨
+      	}
+      }
+      ```
+
+    - ```xml
+      <!--실행할 xml 파일-->
+      <!--src/main/resources/m/hello.html-->
+      <html>
+      <body>
+      	<h1>Mobile Hello Static
+      	Resources</h1>
+      </body>
+      </html>
+      ```
+
+
+
+
+
+### Thymeleaf
+
+> - Thymeleaf는 스프링 부트가 자동 설정을 지원하는 웹 템플릿 엔진. HTML문서에 HTML5 문법으 로 서버쪽 로직을 수행하고 적용시킬 수 있음
+> -  HTML 디자인에 전혀 영향을 미치지 않고 웹 템플릿 엔진을 통해 HTML을 생성
+> -  th:xx 형식으로 속성을 html 태그에 추가하여 값을 처리할 수 있음
+
+- JSP를 권장하지 않는 이유? JAR 패키징 할 때는 동작하지 않고, WAR 패키징 해야 함, Undertow(Servlet Engine)는 JSP를 지원하지 않음
+
+
+
+*추후 추가 예정*
+
+
 
