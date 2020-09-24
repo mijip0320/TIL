@@ -640,9 +640,349 @@
 
 - JSP를 권장하지 않는 이유? JAR 패키징 할 때는 동작하지 않고, WAR 패키징 해야 함, Undertow(Servlet Engine)는 JSP를 지원하지 않음
 
+- Thymeleaf 표현식
 
+  - 변수 표현 : ${ }
+
+    - ```html
+      <p>
+          Today is:
+          <span th:text="${today}">13 feb</span>
+      </p>
+      ```
+
+  - Selection Variable Expression: *{ } ->가까운 DOM에 th:object로 정의된 변수가 있다면 그 변수에 포함된 값을 나타낼 수 있음
+
+    - ```html
+      <div th:object="${session.user}">
+          <p>
+              Name: <span th:text="*{firstName}">Sebastion</span>
+          </p>
+          <p>
+              Surname: <span th:text="*{lastName}">Sebastion</span>
+          </p>
+      </div>
+      ```
+
+  - Message Expressions: #{ } ->미리 정의된 message.properties 파일이 있다면 # 표현식으로 나타낼 수 있음
+
+  - Link URL Expressions: @{ } -> @표현식을 이용해 다양하게 URL 표현
+
+
+
+#### Thymeleaf 예제 :memo:
+
+```java
+//controller/TemplateController.java
+@Controller
+public class TemplateController {
+	@GetMapping("/leaf")
+	public String leaf(Model model) {
+		model.addAttribute("name","vega2k");
+	return "leaf";
+	}
+}
+```
+
+```html
+<!--resources/templates/leaf.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Spring Boot Thymeleaf</title>
+</head>
+<body>
+    <!--Model 객체에 포함된 값을 통해 Thymeleaf 템플릿 엔진이 해당 템플릿에서 명시한 값을 변환-->
+    <!--th:text="${name}"에서 Model에서 넘어온 값을 변환-->
+	<h1 th:text="${name}">Name</h1>
+	<h1>Hello, <span th:text="${name}"></span></h1>
+	<h1>Hello, [[${name}]]</h1>
+</body>
+</html>
+
+```
+
+```java
+@Controller
+public class UserController {
+	@Autowired
+	UserRepository userRepository;
+	@GetMapping("/index")
+	public String index(Model model) {
+		model.addAttribute("users", userRepository.findAll());
+	return "index";
+	}
+}
+
+```
+
+```xml
+<!--resources/templates/index.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<body>
+ <table>
+ <tr>
+ <th>Name</th>
+ <th>Email</th>
+ </tr>
+ <tr th:each="user : ${users}">
+ <td th:text="${user.name}"></td>
+ <td th:text="${user.email}"></td>
+ </tr>
+ </table>
+</body>
+</html>
+```
+
+```javascript
+///controller/UserController.java
+@Controller
+public class UserController {
+ @GetMapping("/signup")
+ public String showSignUpForm(User user) {
+ 	return "add-user";
+ }
+
+ @PostMapping("/adduser")
+ public String addUser(@Valid User user, BindingResult result, Model model) { //@valid user로 null일 때 에러 메세지 출력
+ 	if (result.hasErrors()) {
+ 	return "add-user";
+ }
+ userRepository.save(user);
+ model.addAttribute("users", userRepository.findAll());
+ 	return "index";
+ }
+}
+```
+
+```java
+//User.java
+@Entity
+public class User {
+ @NotBlank(message = "Name is mandatory")
+ @JacksonXmlProperty
+ private String name;
+
+ @NotBlank(message = "Email is mandatory")
+ @JacksonXmlProperty
+ private String email;
+}
+```
+
+```html
+<!--templates/add-user.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<body>
+	<form action="#" th:action="@{/adduser}" th:object="${user}" method="post">
+		<label for="name">Name</label>
+		<input type="text" th:field="*{name}" id="name">
+		<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+		<br/>
+		<label for="email">Email</label>
+		<input type="text" th:field="*{email}" id="email">
+		<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+		<br/>
+		<input type="submit" value="Add User">
+	</form>
+</body>
+</html>
+```
 
 *추후 추가 예정*
+
+
+
+### 스프링 부트 Actuator
+
+> 스프링 부트는 애플리케이션 운영 환경에 필요한 유용한 기능들을 제공. 엔드포인트와 메트릭스 그 데이터를 활용하는 모니터링 기능들이 있음
+
+- 어플의ㅣ 각종 정보를 확인할 수 있는 Endpoints
+
+  - 다양한 endpoints 제공
+  - jmx 또는 http 접근 가능
+  - shutdown을 제외한 모든 endpoint는 기본적으로 활성화 상태
+
+- ```xml
+  <!--의존성 추가-->
+  <dependency>
+   <groupId>org.springframework.boot</groupId>
+   <artifactId>spring-boot-starter-actuator</artifactId>
+  </dependency>
+  
+  ```
+
+- ```properties
+  #properties 설정
+  management.endpoints.web.exposure.include=*
+  management.endpoints.web.exposure.exclude=env,beans
+  spring.boot.admin.client.url=http://localhost:8090
+  ```
+
+- ```java
+  ///com.vega2k.admin/AdminApplication
+  //태그 추가
+  @SpringBootApplication
+  @EnableAdminServer //태그 추가
+  public class SpringbootAdminApplication {
+  } 
+  ```
+
+- ```xml
+  <dependency>
+   <groupId>de.codecentric</groupId>
+   <artifactId>spring-boot-admin-starter-server</artifactId>
+   <version>2.1.4</version>
+  </dependency>
+  ```
+
+
+
+### 스프링 부트 Security
+
+- 스프링 부트 시큐리티 자동 설정
+  - SecurityAutoConfiguration
+  - UserDetailsServiceAutoConfiguration
+  - 모든 요청에 인증이 필요함
+  - 기본 사용자를 자동으로 생성해줌
+    - Username: user
+    - Password: 애플리케이션을 실행할 때 마다 랜덤 값 생성(콘솔 출력)
+
+```xml
+<!--의존성 추가-->
+<dependency>
+ <groupId>org.springframework.boot</groupId>
+ <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+
+```java
+//TemplateController클래스에 메서드 추가
+@Controller
+public class TemplateController {
+ @GetMapping("/mypage")
+ public String mypage() {
+	return "mypage";
+	}
+}
+```
+
+```html
+<!--index,html에 링크 추가-->
+ <a href="/mypage">MyPage</a>
+```
+
+```html
+<!--/templates/mypage.html-->
+<h1>My Page</h1>
+```
+
+```html
+<!--로그인 정보 페이지 작성-->
+<!--templates/mypage.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<body>
+ <h1>My Page</h1>
+  <div>
+	Logged in user: <b th:inline="text" class="user"> [[${#httpServletRequest.remoteUser}]] </b>
+	<form th:action="@{/app-logout}" method="POST">
+		<input type="submit" value="Logout"/>
+	</form>
+ </div>
+</body>
+</html> 
+```
+
+```java
+//SecurityConfig 클래스 작성
+// WebSecurityConfigurerAdapter
+를 상속
+// mypage uri 경로에만 인증 요청을 하도록 함
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter
+{
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests() .antMatchers("/mypage/**").authenticated() 					.antMatchers("/**").permitAll()
+		.and() .formLogin()
+		.and() .httpBasic()
+        .and()
+		.logout() //logout configuration
+		.logoutUrl("/app-logout")
+		.deleteCookies("JSESSIONID")
+		.logoutSuccessUrl("/");
+	}
+}
+```
+
+```java
+//AccountService 클래스 작성
+//UserDetailsService 인터페이스를 구현한 AccountService 클래스에 Account를 생성하는 createAcount() 메서드를 추가
+import org.springframework.security.core.userdetails.UserDetailsService;
+@Service
+public class AccountService implements UserDetailsService {
+@Autowired
+private AccountRepository accountRepository;
+	//Account 레코드 추가
+	public Account createAccount(String username, String password) {
+		Account account = new Account();
+		account.setUsername(username);
+		account.setPassword(password);
+		return accountRepository.save(account);
+	}
+    
+    //AccountService Bean이 생성된 후에 바로 createAccount() 메서드가 호출되도록 @PostConstruct 어노테이션을 사용한다
+    @PostConstruct
+	public void init() {
+		Optional<Account> byUsername = accountRepository.findByUsername("vega2k");
+		if(!byUsername.isPresent()) {
+			Account newAccount = this.createAccount("vega2k", "1234");
+		System.out.println(newAccount);
+		}
+	}
+    
+    @Override
+	//login 할때 사용자가 입력한 정보가 유효한지를 체크한다.
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Optional<Account> byUsername = accountRepository.findByUsername(username);
+		Account account = byUsername.orElseThrow(() -> new UsernameNotFoundException(username));
+		return new User(account.getUsername(),
+		account.getPassword(), authorities());
+}
+	//User 객체의 세번째 인자 USER라는 ROLE을 가진 사용자이다 라고 설정하는 부분
+	private Collection<? extends GrantedAuthority> authorities() {
+		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+    
+    //등록된 passwordEncoder bean을 주입 받아서 password를 인코딩
+    @Autowired
+	private PasswordEncoder passwordEncoder;
+	public Account createAccount(String username, String password) {
+		Account account = new Account();
+		account.setUsername(username);
+		account.setPassword(passwordEncoder.encode(password));
+		//account.setPassword(password);
+		return accountRepository.save(account);
+	}
+}
+```
+
+```java
+//SecurityConfig 클래스에 PasswordEncoder를 Bean으로 등록
+@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+}
+```
 
 
 
