@@ -140,3 +140,16 @@ $ kubectl edit svc kiali -n istio-system
 빨간 부분을 LoadBalancer로 변경하면 자동으로 포트지정됨
 
 아이피주소:해당 포트 번호/kiali로 접속하면 dashboard 접속됨.
+
+
+
+### Book예제 설명
+
+![](https://github.com/IBM/microservices-traffic-management-using-istio/raw/master/images/istio-architecture.png)
+
+> 이 애플리케이션은 Python, Java, Ruby 및 Node.js의 서로 다른 언어로 작성된 4 개의 마이크로서비스로 구성된 애플리케이션
+
+- Envoy는 각 마이크로서비스에 사이드카로 배치
+- 데이터베이스 사용 X, 모든 마이크로서비스는 로컬 파일 시스템에 데이터 저장
+- 
+
