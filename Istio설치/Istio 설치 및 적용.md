@@ -13,7 +13,7 @@ $ export PATH=$PWD/bin:$PATH
 $ istioctl
 ```
 
-![image-20210224103122324](C:\Users\INNOGRID\AppData\Roaming\Typora\typora-user-images\image-20210224103122324.png)
+![image-20210224103122324](./images/image1.png)
 
 ```bash
 $ istioctl manifest apply --set profile=demo
@@ -127,7 +127,7 @@ $ kubectl get svc -n istio-system
 
 ->을 통해서 확인하면 kiali는 타입이 ClusterIP로 되어잇음
 
-![image-20210224154329440](C:\Users\INNOGRID\AppData\Roaming\Typora\typora-user-images\image-20210224154329440.png)
+![image-20210224154329440](./images/image2.png)
 
 포트번호 지정을 위해 
 
@@ -135,7 +135,7 @@ $ kubectl get svc -n istio-system
 $ kubectl edit svc kiali -n istio-system
 ```
 
-![image-20210224154548618](C:\Users\INNOGRID\AppData\Roaming\Typora\typora-user-images\image-20210224154548618.png)
+![image-20210224154548618](./images/image3.png)
 
 빨간 부분을 LoadBalancer로 변경하면 자동으로 포트지정됨
 
