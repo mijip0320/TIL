@@ -192,5 +192,38 @@ reviews-v3-1813607990-8ch52                 2/2       Running   0          6m
   - ratings
   - reviews
 
+페이지를 새로 고침할때마다 reviews영역이 변경됨:
+
+![](https://github.com/IBM/microservices-traffic-management-using-istio/raw/master/images/none.png)
+
+![](https://github.com/IBM/microservices-traffic-management-using-istio/raw/master/images/black.png)
+
+![](https://github.com/IBM/microservices-traffic-management-using-istio/raw/master/images/red.png)
+
+**reviews** 서비스에는 3 가지 버전의 *(reviews-v1, reviews-v2, reviews-v3)* 배포가 있기 때문에 바뀜. Istio의 로드 밸런서는 라운드 로빈 알고리즘을 사용하여 이 서비스의 세 가지 인스턴스를 반복.
 
 
+
+### Istio 예시
+
+출처: [nodejs예제](https://octopus.com/blog/istio/the-sample-application)
+
+서비스를 요청하고 응답을 하는데 걸린 시간 반환하는 애플리케이션<br/>
+
+결과 창:
+
+![](./images/image4.png)
+
+
+
+![](https://i.octopus.com/blog/2019-09/istio/the-sample-application/istio-sample.svg)
+
+- 웹서버 버전: 
+  - version: v1
+  - version: v2
+- 프록시 배포 리소스가 생성한 Pod 리소스로 트래픽을 전달하는로드 밸런서 서비스 리소스가 있으며,이 리소스는 배포 리소스 webserverv1 및 webserverv2에 의해 생성된 Pod 리소스의 콘텐츠를 요청해서 해당 콘텐츠가 브라우저로 반환
+- 프록시 앱에선 모든 웹서버 포드 리소스를 가르키고 있고 webserverv1 또는 webserverv2 중 하나에 연결함. 연결된 포드을 검색하는 데 걸린 시간도 확인 가능
+
+Kiali 대시보드:
+
+![](./images/image5.png)
