@@ -32,4 +32,5 @@ Model은 DTO와 DAO로 분류<br>
 
 웹 프로그래밍에서는 컨트롤러에서 Service Layer를 분리하여 Domain 로직이 수행되는 곳과 View의 요청을 매핑하는 곳을 독립적으로 관리할 수 있음
 
-*추가 예정*
+
+
