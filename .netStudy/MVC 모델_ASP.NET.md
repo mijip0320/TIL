@@ -296,3 +296,11 @@ public class Guest
   - 넘어온 모델 객체의 타임을 @model과 함께 지정하고, 뷰 본문에서 "Model.속성명"과 같이 사용하면 됨(ex. 모델 객체에서 Message라는 속성이 있으면, @Model.Message와 같이 지정)
 - ViewData는 Dictionary(해시테이블) 타입으로 Key에 Value를 지정해서 데이터를 전달
 
+<hr>
+
+#### 새로운 페이지 생성 시
+
+1. Views아래 해당 폴더(ex.Home) 아래 뷰 생성
+2. 해당하는 컨트롤러는 Controllers 폴더 아래 생성(같은이름+Controller라는 파일명으로 생성)
+3. _Layout.cshtml에 해당 페이지로 이동할 수 있는 링크 추가!
+   1. ex. a 태그 href에 뷰 이름 추가
