@@ -1,6 +1,6 @@
 # MVC 모델_ASP.NET
 
-> ASP.NET의 MVC는 Models, Views, Controllers 등 3개의 폴더를 기본으로 생성, 고정된 것으로 변경X!!!
+> ASP.NET의 MVC는 Models, Views, Controllers 등 3개의 폴더를 기본으로 생성, 고정된 것으로 변경 안함!!
 
 - Views 폴더의 경우 Controller의 이름에 맞는 서브폴더를 생성하고 그 안에 View 파일을 생성
   - HomeController의 경우 그 컨트롤러에서 사용하는 뷰는 Views/Home/* 밑에 있어야 함
@@ -38,7 +38,11 @@ namespace WebApplication1.Controllers
     {
         public ActionResult Index()
         {
-            //MVC의 Controller 베이스클래스의 View() 메서드를 호출한 것으로, 		Controller.View() 메서드는 (MVC Framework에서 미리 지정한) /Views/Home 폴더 (/Views/{컨트롤러명}) 밑에서 메서드와 동일한 이름인 Index.cshtml (C#의 경우) 파일을 HTML 랜더링하여 결과인 ViewResult (ActionResult의 파생클래스) 객체를 리턴
+            //MVC의 Controller 베이스클래스의 View() 메서드를 호출한 것으로,
+            //Controller.View() 메서드는 (MVC Framework에서 미리 지정한) 
+            ///Views/Home 폴더 (/Views/{컨트롤러명}) 밑에서 메서드와 동일한 이름인
+            //Index.cshtml (C#의 경우) 파일을 HTML 랜더링하여 결과인 
+            //ViewResult (ActionResult의 파생클래스) 객체를 리턴
             return View();
         }
  
@@ -209,7 +213,7 @@ public class LoginController : Controller
 
 **View 레이아웃:**
 
-```html
+```c#
 @{    
     Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
@@ -230,7 +234,7 @@ public class LoginController : Controller
 >
 > 여러 View 안에 임의로 넣어서 사용할 수 있는 장점
 
-```html
+```c#
 <p>
     My View
 </p>
