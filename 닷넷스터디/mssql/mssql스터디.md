@@ -14,3 +14,18 @@ END
 ```
 
 형식으로 지정 가능
+
+<br>
+
+
+
+닷넷과 연결 시, Web.config 파일에
+
+```xml
+<connectionStrings>
+	<add name="이름지정" connectionString="server=서버이름;Initial Catalog=디비이름;User ID= ;Password= ; Connection Timeout=600" providerName="System.Data.SqlClient" />
+</connectionStrings>
+```
+
+형식으로 지정
+
