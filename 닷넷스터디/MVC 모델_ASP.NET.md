@@ -308,3 +308,6 @@ public class Guest
 2. 해당하는 컨트롤러는 Controllers 폴더 아래 생성(같은이름+Controller라는 파일명으로 생성)
 3. _Layout.cshtml에 해당 페이지로 이동할 수 있는 링크 추가!
    1. ex. a 태그 href에 뷰 이름 추가
+
+<hr>
+
