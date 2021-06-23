@@ -42,3 +42,18 @@ SET @변수 = (원하는 쿼리문 또는 값)
 추후 @변수로 다른 쿼리문에서도 사용 가능
 ```
 
+
+
+<br>
+
+외래키 걸려있는 디비 Truncate 하는 방법
+
+```mssql
+  DELETE FROM [TableName]
+-- Set current ID to "1"
+-- If table already contains data, use "0"
+-- If table is empty and never insert data, use "1"
+-- Use SP https://github.com/reduardo7/TableTruncate
+DBCC CHECKIDENT ([TableName], RESEED, 0)
+```
+
