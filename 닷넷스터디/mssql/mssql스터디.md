@@ -57,3 +57,46 @@ SET @변수 = (원하는 쿼리문 또는 값)
 DBCC CHECKIDENT ([TableName], RESEED, 0)
 ```
 
+<br>
+
+문자열을 특정 문자(,) 기준으로 split해서 하나씩 조회하기
+
+```mssql
+DECLARE @items NVARCHAR(MAX)
+SET @items = '111,222,333,444,555,666,777,888,999'
+
+DECLARE @delimiter NVARCHAR(1)
+SET @delimiter = ','
+
+DECLARE @item NVARCHAR(MAX)
+SET @item = NULL
+
+DECLARE @results TABLE (
+    Item    NVARCHAR(MAX)
+)
+
+WHILE LEN(@items) > 0
+BEGIN
+    DECLARE @index    INT
+    SET @index = PATINDEX('%' + @delimiter + '%', @items)
+    IF @index > 0
+    BEGIN
+        SET @item = SUBSTRING(@items, 0, @index)
+        SET @items = SUBSTRING(@items, LEN(@item + @delimiter) + 1, LEN(@items))
+
+        INSERT INTO @results ( Item ) VALUES ( @item )
+    END
+    ELSE
+    BEGIN
+        SET @item = @items
+        SET @items = NULL
+
+        INSERT INTO @results ( Item ) VALUES ( @item )
+    END
+END
+
+SELECT * FROM @results
+```
+
+출처: https://blog.aliencube.org/ko/2014/02/10/converting-array-like-table-from-string-in-ms-sql/
+
