@@ -100,3 +100,16 @@ SELECT * FROM @results
 
 출처: https://blog.aliencube.org/ko/2014/02/10/converting-array-like-table-from-string-in-ms-sql/
 
+<br>
+
+
+
+다른 테이블과 조인 시 조인 기준+where 절 사용
+
+```mssql
+SELECT DISTINCT B.dependency_mgmt_filename as dependency_filename, B.dependency_version  as dependency_version
+	FROM @TARGET_MODULE A
+	INNER JOIN FILE_TOTAL_MASTER2 B ON A.MGMT_FILENAME = B.mgmt_filename AND A.VERSION = B.version
+	WHERE B.dependency_version IS NOT NULL
+```
+
