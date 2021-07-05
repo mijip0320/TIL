@@ -113,3 +113,19 @@ SELECT DISTINCT B.dependency_mgmt_filename as dependency_filename, B.dependency_
 	WHERE B.dependency_version IS NOT NULL
 ```
 
+<br>
+
+임시 테이블 만드는 방법
+
+```mssql
+ DECLARE @TEST_TABLE2	TABLE
+	(
+		IDX				INT IDENTITY(1,1) NOT NULL,
+		max_id			NVARCHAR(30) NOT NULL
+		
+	)
+	
+INSERT INTO @TEST_TABLE2
+select~
+```
+
