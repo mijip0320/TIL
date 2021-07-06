@@ -109,3 +109,10 @@ var moduleversion = $(button).data('id'); //version 받아옴
 button 요소들에 대한 꾸밈을 적용한 CSS를 배포로 간단히 클래스명을 이용해 적용할 수 있다.
 
 출처: https://chlolisher.tistory.com/72
+
+ ### 🍚 다른 컨트롤러/페이지로 이동하고 싶을 때
+
+```javascript
+window.location.href = "./Search/SearchVersion?PatchVersion=" + 보낼 정보;
+```
+
