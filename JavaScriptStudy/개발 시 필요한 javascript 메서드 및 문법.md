@@ -116,3 +116,33 @@ button 요소들에 대한 꾸밈을 적용한 CSS를 배포로 간단히 클래
 window.location.href = "./Search/SearchVersion?PatchVersion=" + 보낼 정보;
 ```
 
+
+
+### 🥗 버튼 bootstrap
+
+색깔별로 다양하게 줄 수 있음
+
+```javascript
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-secondary">Secondary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-light">Light</button>
+<button type="button" class="btn btn-dark">Dark</button>
+
+<button type="button" class="btn btn-link">Link</button>
+```
+
+크기
+
+```javascript
+<button type="button" class="btn btn-primary btn-lg">Large button</button>
+<button type="button" class="btn btn-secondary btn-lg">Large button</button>
+
+<button type="button" class="btn btn-primary btn-sm">Small button</button>
+<button type="button" class="btn btn-secondary btn-sm">Small button</button>
+```
+
+출처: https://getbootstrap.com/docs/4.0/components/buttons/
