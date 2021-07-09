@@ -146,3 +146,80 @@ window.location.href = "./Search/SearchVersion?PatchVersion=" + 보낼 정보;
 ```
 
 출처: https://getbootstrap.com/docs/4.0/components/buttons/
+
+
+
+### 🥘popover tooltip 예시
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h3>Bootstrap 4 Table Demo</h2>
+ 
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th>Number of Sales</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr data-toggle="popover" data-trigger="hover" title="Popover in Table Demo"  data-content="Popover in row number 1">
+      <th scope="row">Jan</th>
+      <td>105</td>
+      <td>$15,000.00</td>
+    </tr>
+    <tr>
+      <th scope="row">Feb</th>
+      <td>95</td>
+      <td>$12,000.00</td>
+    </tr>
+    <tr data-toggle="popover" data-trigger="hover" title="Popover in Table Demo"  data-content="Popover in row number 3">
+      <th scope="row">Mar</th>
+      <td>150</td>
+      <td>$20,000.00</td>
+    </tr>
+    <tr>
+      <th scope="row">Apr</th>
+      <td>50</td>
+      <td>$30,000.00</td>
+    </tr>
+    <tr data-toggle="popover" data-trigger="hover" title="Popover in Table Demo"  data-content="Popover in row number 5">
+      <th scope="row">May</th>
+      <td>80</td>
+      <td>$15,000.00</td>
+    </tr>
+    <tr>
+      <th scope="row">Jun</th>
+      <td>110</td>
+      <td>$22,000.00</td>
+    </tr>            
+  </tbody>
+</table>
+</div>
+
+
+<script>
+$(document).ready(function(){
+$('[data-toggle="popover"]').popover({
+})    
+});
+</script>
+
+</body>
+</html>
+
+
+```
+
+출처: https://www.jquery-az.com/bootstrap4/demo.php?ex=84.0_6
