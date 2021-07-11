@@ -223,3 +223,15 @@ $('[data-toggle="popover"]').popover({
 ```
 
 출처: https://www.jquery-az.com/bootstrap4/demo.php?ex=84.0_6
+
+
+
+### 🍵Modal close 구현 시
+
+해당 버튼에 속성으로 data-dismiss="modal"이 있어야 제대로 닫힘
+
+```html
+<button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal" onclick="downList = []; modal_close('download_modal'); ">취소</button>@*data-dismiss 꼭 필요!*@
+
+```
+
