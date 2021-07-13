@@ -235,3 +235,13 @@ $('[data-toggle="popover"]').popover({
 
 ```
 
+### 🍧Checkbox를 편리하게 설정하는 방법
+
+해당 체크박스 label을 눌러도 체크가 되게끔 설정
+
+```html
+<input type="checkbox" id="c1" name="cc" />
+<label for="c1">Check Box 1</label>
+```
+
+label을 통해 input과 상호작용하기 위해서는 input과 label이 서로 연결되어야 함.  `for=""`과 input의 ID를 사용하면 연결.
