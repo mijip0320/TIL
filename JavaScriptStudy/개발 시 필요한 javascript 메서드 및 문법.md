@@ -245,3 +245,15 @@ $('[data-toggle="popover"]').popover({
 ```
 
 label을 통해 input과 상호작용하기 위해서는 input과 label이 서로 연결되어야 함.  `for=""`과 input의 ID를 사용하면 연결.
+
+
+
+### 🍣엔터로 검색 기능 활성화
+
+```javascript
+//엔터로 검색 모듈명 검색
+$("#텍스트아이디").keydown(function (e) { if (e.keyCode == 13) $("#버튼아이디").click(); });
+//keydown : This event occurs when a keyboard key is pressed.
+//keyup: This event occurs when a keyboard key is released.
+```
+
