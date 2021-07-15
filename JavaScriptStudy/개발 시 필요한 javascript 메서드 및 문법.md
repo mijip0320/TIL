@@ -263,3 +263,11 @@ $("#텍스트아이디").keydown(function (e) { if (e.keyCode == 13) $("#버튼�
 //keyup: This event occurs when a keyboard key is released.
 ```
 
+### 🍺onclick parameter에 공백이 포함될 때
+
+```javascript
+RenderValueAs(data => "<button type='button' class='btn btn-secondary btn-sm' onclick=\"selectRow('" + data+"')\">선택</button>");
+```
+
+onclick 맨 앞에 \ 추가, 맨 뒤에 \ 추가함으로써 공백을 포함시킨다.
+
