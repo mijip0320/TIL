@@ -261,6 +261,10 @@ label을 통해 input과 상호작용하기 위해서는 input과 label이 서�
 $("#텍스트아이디").keydown(function (e) { if (e.keyCode == 13) $("#버튼아이디").click(); });
 //keydown : This event occurs when a keyboard key is pressed.
 //keyup: This event occurs when a keyboard key is released.
+
+//OR
+
+
 ```
 
 ### 🍺onclick parameter에 공백이 포함될 때
@@ -270,4 +274,19 @@ RenderValueAs(data => "<button type='button' class='btn btn-secondary btn-sm' on
 ```
 
 onclick 맨 앞에 \ 추가, 맨 뒤에 \ 추가함으로써 공백을 포함시킨다.
+
+
+
+### 🍐로딩 추가
+
+```javascript
+//div(로딩을 넣고싶은) 태그 안에 로딩 생성
+$(".loader").html('<div class="loading"> </div>');
+//로딩 css 실행
+document.getElementsByClassName("loader")[0].style.display = "block";
+
+//..작업 완료 후
+//로딩 remove
+$(".loading").remove();
+```
 
