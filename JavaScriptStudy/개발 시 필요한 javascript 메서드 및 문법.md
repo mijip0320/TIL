@@ -286,7 +286,7 @@ $(".loader").html('<div class="loading"> </div>');
 document.getElementsByClassName("loader")[0].style.display = "block";
 
 //..작업 완료 후
-//로딩 remove
+//추후 로딩 remove 필요
 $(".loading").remove();
 ```
 
