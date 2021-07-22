@@ -290,3 +290,4 @@ document.getElementsByClassName("loader")[0].style.display = "block";
 $(".loading").remove();
 ```
 
+- 데이터가 얼마 없으면 모달 띄우기도 전에 데이터가 불러와짐 -> 순서를: 버튼 클릭->모달이 띄워지면 그제서야 데이터 부르기
