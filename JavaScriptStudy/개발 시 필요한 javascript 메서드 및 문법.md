@@ -321,3 +321,9 @@ window.location.href = "./Search/SearchVersion?PatchVersion=" + version
 
   - POST방식으로 바꿔야함
 
+### 🍖Nullable<DateTime>과 DateTime 차이
+
+- nullable: datetime에 null 값이 허용됨(초기값)
+- Datetime에선 초기값이 0001년01월01일
+
+Datetime가지고 파싱(parse, parseexact) 등 형식을 가지고 데이터를 수정하려면 nullable이 아닌 일반 Datetime 가지고 해야 함(nullable은 파싱이 적용안됨)
