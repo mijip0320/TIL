@@ -24,7 +24,6 @@ using System.Web.Http;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-
 using System.Data;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
@@ -47,7 +46,7 @@ public class UserDBAccess
             {
                 var result = con.Query<User>("프로시저명"
                     , new { 디비입력값 = 매개변수 }, commandType: CommandType.StoredProcedure);
-                string resultjson = JsonConvert.SerializeObject(new { items = result });
+                string resultjson = JsonConvert.SerializeObject(new { items(표현하고자 하는 데이터 이름) = result });
                 JObject jo = JObject.Parse(resultjson);
 
                 return jo;
