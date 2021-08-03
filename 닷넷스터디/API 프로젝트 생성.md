@@ -57,3 +57,4 @@ public class UserDBAccess
     }
 ```
 
+> postman에서 해당 url과 파라미터 입력해서 테스트 가능/크롬에서 json 확장자 다운받아서 결과 확인 가능
