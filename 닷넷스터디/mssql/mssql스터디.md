@@ -129,3 +129,15 @@ INSERT INTO @TEST_TABLE2
 select~
 ```
 
+<br>
+
+year, month, day를 따로따로 뽑을 때
+
+```mssql
+SELECT DATEPART(yy, GETDATE()) --년
+
+SELECT DATEPART(mm, GETDATE()) --월
+
+SELECT DATEPART(dd, GETDATE()) --일
+```
+
