@@ -7,7 +7,7 @@ MOBX:
 - 관찰 대상을 observable 데코레이터로 정해서 state값이 변경될때 마다 렌더링 진행
 - 객체지향적이기 때문에 스프링 프레임워크 사용 시 적합
 - **Mobx Configuration 설정**으로 **State를 오직 메소드**를 통하여 변경할 수 있도록 **Private**하게 관리 할 수 있음
-- 데이터를 ajax로 가져옴
+- 데이터를 AJAX로 가져옴
 
 ```react
 class RiderRepository {
