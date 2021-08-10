@@ -196,5 +196,8 @@ END
 
 
 GO
+
+--사용시 (FN_SPLIT2가 테이블이기 때문)
+select IDX , VALUE from dbo.FN_SPLIT2
 ```
 
