@@ -340,6 +340,7 @@ $("#aaa").popover({ //팝오버 하고자 하는 태그 설정 시
 	content: function() {
           return $('#popover-content').html(); //-> 콘텐츠.html()을 하라고 하지만 잘 안됨(일반 string 값은 잘 가져옴)
         }
+    //content: "string 값" <-원래 방식
 });
 ```
 
