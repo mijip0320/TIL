@@ -327,3 +327,43 @@ window.location.href = "./Search/SearchVersion?PatchVersion=" + version
 - Datetime에선 초기값이 0001년01월01일
 
 Datetime가지고 파싱(parse, parseexact) 등 형식을 가지고 데이터를 수정하려면 nullable이 아닌 일반 Datetime 가지고 해야 함(nullable은 파싱이 적용안됨)
+
+
+
+### 🍰POPOVER content 부분 표시할때...왜 이럴까 증맬 알수없다 자스~!!!
+
+인터넷에선
+
+```javascript
+$("#aaa").popover({ //팝오버 하고자 하는 태그 설정 시
+    html: true, 
+	content: function() {
+          return $('#popover-content').html(); //-> 콘텐츠.html()을 하라고 하지만 잘 안됨(일반 string 값은 잘 가져옴)
+        }
+});
+```
+
+대체방법:
+
+```javascript
+$('#moreinfo').popover({
+            trigger: 'hover',
+            html: true,
+            //content: function () {
+            //    var data = $('#directRegister').html();
+            //    return data;
+            //    //$('#directRegister').html();
+            //}
+            content: function () { //clone을 함으로써 div 컨텐츠를 가져온다
+                var clone = $("#directRegister")
+                   .clone(true)
+                   .html($("#directRegister").clone(true).html()
+                   );
+                clone.removeClass('hide');
+
+                return clone;
+            }
+            //content: data
+        })
+```
+
