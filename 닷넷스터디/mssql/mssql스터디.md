@@ -206,6 +206,6 @@ select IDX , VALUE from dbo.FN_SPLIT2
 mmsql 공백, 띄어쓰기, 탭 제거
 
 ```mssql
-REPLACE(REPLACE(REPLACE([칼럼명], CHAR(13), ''), CHAR(10), ''), CHAR(9),'')
+REPLACE(REPLACE(REPLACE(REPLACE([칼럼명], CHAR(13), ''), CHAR(10), ''), CHAR(9),''),' ','')
 ```
 
