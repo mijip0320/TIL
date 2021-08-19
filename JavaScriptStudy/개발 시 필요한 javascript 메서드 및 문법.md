@@ -368,3 +368,11 @@ $('#moreinfo').popover({
         })
 ```
 
+
+
+### 🥭해당 변수가 undefined인지 확인할 때
+
+```javascript
+if (typeof(해당변수) !== 'undefined')
+```
+
