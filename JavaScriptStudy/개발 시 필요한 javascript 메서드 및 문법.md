@@ -385,3 +385,33 @@ $('input:radio[name="file_cat"]:checked').val()
 //(input:타입[name=네임속성이름]:checked).val()
 ```
 
+
+
+### 🥙 파일명에서 확장자 가져올 때
+
+```javascript
+ //파일명에서 파일 확장자명 추출
+        var fileName = document.getElementById('ex_file').value;
+        var fileName_len = fileName.length;
+        var _lastDot = fileName.lastIndexOf('.');
+        var file_ext = fileName.substring(_lastDot + 1, fileName_len);
+        
+        if ($('input:radio[name="file_cat"]:checked').val() == "2") {
+            if (file_ext != "ps1" && file_ext != "exe") {
+                $('#modal_text').html(" <p >'통합 SSO 연동 .ps1/ .exe' 파일 형태는 .ps1 또는 .exe 파일만 가능합니다. 다시 확인해주세요. </p> ");
+                $('#registerClick').modal('show');
+            } else {
+                addfileList(file);//올바른 파일이면 add
+            }
+        } else if ($('input:radio[name="file_cat"]:checked').val() == "5") {
+            if (file_ext != "py") {
+                $('#modal_text').html(" <p >'통합 SSO 연동 .py' 파일 형태는 .py 파일만 가능합니다. 다시 확인해주세요. </p> ");
+                $('#registerClick').modal('show');
+            } else {
+                addfileList(file); //올바른 파일이면 add
+            }
+        } else {
+            addfileList(file);//올바른 파일이면 add
+        }
+```
+
