@@ -376,3 +376,12 @@ $('#moreinfo').popover({
 if (typeof(해당변수) !== 'undefined')
 ```
 
+
+
+### 🍜선택한 값의 value를 가져올때
+
+```javascript
+$('input:radio[name="file_cat"]:checked').val()
+//(input:타입[name=네임속성이름]:checked).val()
+```
+
