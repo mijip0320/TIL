@@ -394,7 +394,7 @@ $('input:radio[name="file_cat"]:checked').val()
         var fileName = document.getElementById('ex_file').value;
         var fileName_len = fileName.length;
         var _lastDot = fileName.lastIndexOf('.');
-        var file_ext = fileName.substring(_lastDot + 1, fileName_len);
+        var file_ext = fileName.substring(_lastDot + 1, fileName_len); //_lastDot까지 하면 .exe 출력, _lastDot+1까지 하면 exe 출력
         
         if ($('input:radio[name="file_cat"]:checked').val() == "2") {
             if (file_ext != "ps1" && file_ext != "exe") {
