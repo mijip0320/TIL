@@ -415,3 +415,13 @@ $('input:radio[name="file_cat"]:checked').val()
         }
 ```
 
+### 🍤필요한 html 정보 해당 id 태그 아래 넣기
+
+```html
+<div id="fileTotalSize" style="display: inline;">원하는 내용 또는 태그가 대입됨 </div>
+```
+
+```javascript
+ $('#fileTotalSize').html(원하는 내용 또는 태그);
+```
+
