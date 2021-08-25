@@ -425,3 +425,16 @@ $('input:radio[name="file_cat"]:checked').val()
  $('#fileTotalSize').html(원하는 내용 또는 태그);
 ```
 
+
+
+### 🧆Date를 가져와서 toISOString값으로 반환할때 주의
+
+```javascript
+new Date().toISOString.substring(0,10) //2021-08-24 형태로 출력되지만 toISOString함수는 UTC시간을 기준으로 반환하기 때문인데, 그 시간이 한국과 9시간차이의 오프셋을 가짐!
+
+//수정
+var timezoneOffset = new Date().getTimezoneOffset() * 60000;
+var timezoneDate = new Date(Date.now() - timezoneOffset);
+timezoneDate.toISOString().substring(0, 10); //한국시간 기준으로 날짜가 출력됨
+```
+
