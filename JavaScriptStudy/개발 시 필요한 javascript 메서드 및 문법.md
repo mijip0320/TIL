@@ -438,3 +438,11 @@ var timezoneDate = new Date(Date.now() - timezoneOffset);
 timezoneDate.toISOString().substring(0, 10); //한국시간 기준으로 날짜가 출력됨
 ```
 
+
+
+### 🍑String에서 Datetime으로 변환할 때
+
+```mssql
+select CONVERT(DATETIME, @expire_date2,20)
+```
+
