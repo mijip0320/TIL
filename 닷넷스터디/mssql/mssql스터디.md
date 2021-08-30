@@ -238,3 +238,51 @@ mmsql 공백, 띄어쓰기, 탭 제거
 REPLACE(REPLACE(REPLACE(REPLACE([칼럼명], CHAR(13), ''), CHAR(10), ''), CHAR(9),''),' ','')
 ```
 
+<br>
+
+mssql 조건 주기(case when이 잘 안될때 )
+
+```mssql
+# WHERE 절에 명시한 조건에 충족하는 결과가 없기 때문!!
+
+# 결과 값이 0개 이기 때문에 0개의 행이 출력!!
+
+# 일반적으로 MSSQL에서 조건에 해당되는 값이 없을때 처리 방법!!
+
+ 
+
+       IF EXISTS
+
+       (
+
+             SELECT 컬럼명
+
+             FROM 테이블명
+
+             WHERE 조건
+
+       )
+
+       BEGIN
+
+             해당조건의 값이 있을 경우처리
+
+       END
+
+      
+
+       ELSE
+
+            
+
+       BEGIN
+
+            해당조건의 값이 없을 경우처리
+
+       END
+
+
+
+출처: https://rohsstory.tistory.com/409 [디버깅하는 남자]
+```
+
