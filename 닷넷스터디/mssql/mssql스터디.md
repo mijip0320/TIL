@@ -286,3 +286,47 @@ mssql 조건 주기(case when이 잘 안될때 )
 출처: https://rohsstory.tistory.com/409 [디버깅하는 남자]
 ```
 
+<br>
+
+mssql 교집합, 차집합 구하기
+
+```mssql
+1. INTERSECT
+
+ 
+
+- SELECT * FROM TableA INTERSET SELECT * FROM TableB
+
+  ( TableA 와 TableB 가 일치하는 결과를 리턴 )
+
+- 교집합 개념
+
+ 
+
+2. EXCEPT
+
+ 
+
+- SELECT * FROM TableA EXCEPT SELECT * FROM TableB
+
+  ( TableA  Row 내용 중 TableB와 Row 내용이 같지 않거나
+
+   TableA 에는 있는데 TableB에는 없는 데이터를 리턴 )
+
+- 차집합 개념
+
+ 
+
+3. 주의 사항
+
+ 
+
+- TableA 와 TableB 의 컬럼의 갯수와 순서가 동일해야 함
+
+- 각 상호 비교되는 컬럼들의 데이터 형식이 호환되어야 함
+
+
+
+출처: https://rocabilly.tistory.com/50 [프로그램이 좋다]
+```
+
