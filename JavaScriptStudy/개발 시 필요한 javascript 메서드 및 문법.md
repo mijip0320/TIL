@@ -69,6 +69,22 @@ var moduleversion = $(button).data('id'); //version 받아옴
             }
 
         }
+
+//일반 추가
+  $.ajax({
+            type: "POST",
+            url: '@Url.Action("customerList", "Search")',
+            success: function (result) {
+                var list = result.data;
+                for (var i = 0; i < list.length; i++) {
+                    $('#customer').append('<option value="' + list[i] + '">' + list[i] + '</option>');
+                }
+                if (customerInput != "") {
+                    $("#customer option[value='" + customerInput + "']").attr('selected', true);
+                }
+            }, error: function (e) {
+                alert("error");
+            }
 ```
 
 ### 🍳select 태그에서 동적으로 제거
