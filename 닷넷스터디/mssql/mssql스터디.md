@@ -330,3 +330,16 @@ mssql 교집합, 차집합 구하기
 출처: https://rocabilly.tistory.com/50 [프로그램이 좋다]
 ```
 
+<br>
+
+중첩 CASE 사용
+
+```mssql
+CASE WHEN B.expired_date is not null AND B.requester is not null AND B.approver is null THEN '0' --승인 대기 중
+				WHEN B.expired_date is null or status != 'TEST모듈' THEN 
+					CASE WHEN B.requester is not null THEN '0' --승인 대기 중
+					ELSE '1' --제한 없음
+					END
+				ELSE CONVERT(CHAR(20),B.expired_date,120) end as expired_date --만료일
+```
+
