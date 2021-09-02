@@ -343,3 +343,25 @@ CASE WHEN B.expired_date is not null AND B.requester is not null AND B.approver 
 				ELSE CONVERT(CHAR(20),B.expired_date,120) end as expired_date --만료일
 ```
 
+<br>
+
+그룹 중 가장 큰 값(id) 별로 선택
+
+```mssql
+--각 file_id별로 제일 큰 id 값들만 선택
+SELECT id, file_id from(
+select ROW_NUMBER() OVER (PARTITION BY file_id order by id desc) as RankNO, id, file_id, expired_date, requester, approver FROM DOWNLOAD_DATE_MANAGE
+) T
+where RankNo = 1
+```
+
+<br>
+
+같지 않다 표현
+
+```mssql
+ Select * From subject Where CURRICULUM_CODE <> 1
+
+Select * From subject Where CURRICULUM_CODE != 1
+```
+
