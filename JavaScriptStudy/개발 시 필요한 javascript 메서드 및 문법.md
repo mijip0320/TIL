@@ -462,3 +462,22 @@ timezoneDate.toISOString().substring(0, 10); //한국시간 기준으로 날짜�
 select CONVERT(DATETIME, @expire_date2,20)
 ```
 
+
+
+### 🍺특정 문자열 포함 여부 체크
+
+```javascript
+var text = "특정문자열"
+if(text.indexOf(findString) != -1) { //포함될 때
+
+    alert("성공!");
+
+    }
+
+else { //포함 안됨
+
+    alert("실패!");
+
+}
+```
+
