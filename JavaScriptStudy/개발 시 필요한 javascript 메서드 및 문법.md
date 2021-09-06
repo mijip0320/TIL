@@ -482,3 +482,23 @@ else { //포함 안됨
 }
 ```
 
+
+
+### 🥟테이블 안에 버튼을 특정 위치로 고정하고 싶을 때
+
+```html
+div#father {
+    position: relative;
+}
+div#son1 {
+    position: absolute;
+    /* put your coords here */
+}
+div#son2 {
+    position: absolute;
+    /* put your coords here */
+}
+```
+
+- 부모 태그가 relative, 자식태그가 absolute로 고정되어야 원하는 위치에 태그를 넣을 수 있음
+
