@@ -365,3 +365,16 @@ where RankNo = 1
 Select * From subject Where CURRICULUM_CODE != 1
 ```
 
+<br>
+
+사용자 지정 순서 지정
+
+```mssql
+ORDER BY  
+   CASE WHEN dbo.FIND_FILE_CAT(file_cat) = '관리자용삭제툴' THEN 1 
+   WHEN dbo.FIND_FILE_CAT(file_cat) = '고객사전용툴' THEN 2
+   WHEN dbo.FIND_FILE_CAT(file_cat) = 'TEST모듈' THEN 3 
+   WHEN dbo.FIND_FILE_CAT(file_cat) = '고객사전용모듈' THEN 4
+   WHEN dbo.FIND_FILE_CAT(file_cat) = '통합SSO연동.ps1/.exe' OR dbo.FIND_FILE_CAT(file_cat) = '통합SSO연동.py모듈' THEN 5 END ASC
+```
+
