@@ -378,3 +378,28 @@ ORDER BY
    WHEN dbo.FIND_FILE_CAT(file_cat) = '통합SSO연동.ps1/.exe' OR dbo.FIND_FILE_CAT(file_cat) = '통합SSO연동.py모듈' THEN 5 END ASC
 ```
 
+<br>
+
+조회되지 않는 데이터를 조건문으로 걸면 결과가 아무것도 안나옴 -> 결과가 안나오는 쿼리문도 미리 처리해야함
+
+```mssql
+--조건
+DECLARE @max_date nvarchar(50)
+	SET @max_date = CASE WHEN (SELECT top 1 reg_date from FILE_MASTER where customer = @customer and dbo.FIND_FILE_CAT(file_cat) = '고객사전용툴' order by reg_date desc) is null or (SELECT top 1 reg_date from FILE_MASTER where customer = '(사)대한간호협회' and dbo.FIND_FILE_CAT(file_cat) = '고객사전용툴' order by reg_date desc) = '' THEN '' --null값 처리
+	ELSE (SELECT top 1 CONVERT(CHAR(23),reg_date,21) from FILE_MASTER where customer = @customer and dbo.FIND_FILE_CAT(file_cat) = '고객사전용툴' order by reg_date desc) END --그 외 해당 값 출력
+	
+...
+
+CASE WHEN dbo.FIND_FILE_CAT(file_cat)= ''관리자용삭제툴'' THEN 1 
+				   WHEN dbo.FIND_FILE_CAT(file_cat) = ''TEST모듈'' THEN 3 
+				   WHEN dbo.FIND_FILE_CAT(file_cat) = ''고객사전용모듈'' THEN 4
+				   WHEN dbo.FIND_FILE_CAT(file_cat) = ''통합SSO연동.ps1/.exe'' OR dbo.FIND_FILE_CAT(file_cat) = ''통합SSO연동.py모듈'' THEN 5 
+				   --조건문 사용
+					WHEN '''+@max_date+''' <> '''' THEN 
+						CASE WHEN CONVERT(CHAR(23),reg_date,21) ='''+@max_date+''' AND dbo.FIND_FILE_CAT(file_cat) = ''고객사전용툴'' THEN 2
+						ELSE 6 END 
+				   END as ROW_ORDER
+```
+
+
+
