@@ -502,3 +502,19 @@ div#son2 {
 
 - 부모 태그가 relative, 자식태그가 absolute로 고정되어야 원하는 위치에 태그를 넣을 수 있음
 
+
+
+### 🧅 SELECT 태그 multiple 속성 추가
+
+```html
+<select name="order[]" multiple>
+    <option value="americano">아메리카노</option>
+    <option value="caffe latte">카페라테</option>
+    <option value="cafe au lait">카페오레</option>
+    <option value="espresso">에스프레소</option>
+</select>
+```
+
+- 윈도우즈(Windows) 운영체제에서는 CTRL이나 SHIFT키를 사용하여 여러 옵션을 선택할 수 있으며, 맥(Mac) 운영체제에서는 COMMAND키를 사용하여 여러 옵션을 선택
+- multiple은 불리언 속성 ->명시하지 않으면 false, 명시하면 true값을 가지게 됨
+
