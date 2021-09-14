@@ -401,5 +401,80 @@ CASE WHEN dbo.FIND_FILE_CAT(file_cat)= ''관리자용삭제툴'' THEN 1
 				   END as ROW_ORDER
 ```
 
+<br>
+
+UNION 사용 시 서브 쿼리를 이용하여 해당 서브 쿼리 안에 order by를 넣을 수 잇음
+
+```mssql
+ SELECT NAME, AGE, GENDER, REGDATE
+
+ FROM (
+
+         SELECT TOP 1 NAME, AGE, GENDER, REGDATE
+
+         FROM dbo.TEST_TBL
+
+         WHERE GENDER = '남'
+
+         ORDER BY REGDATE DESC
+
+     ) AS A
+
+ 
+
+ UNION ALL
+
+ 
+
+ SELECT NAME, AGE, GENDER, REGDATE
+
+ FROM (
+
+         SELECT TOP 1 NAME, AGE, GENDER, REGDATE
+
+         FROM dbo.TEST_TBL
+
+         WHERE GENDER = '여'
+
+         ORDER BY REGDATE DESC
+
+     ) AS B
+
+ GO
+
+
+
+--출처: https://lovedb.tistory.com/226 [More haste, less speed]
+```
+
+<br>
+
+EXISTS 사용방법
+
+```mssql
+SELECT
+	컬럼
+FROM
+	테이블 이름
+WHERE EXISTS (
+	SELECT 문
+)
+```
+
+```mssql
+SELECT
+	*
+FROM
+	STUDENT_GRADE
+WHERE EXISTS (
+	SELECT
+		*
+	FROM
+		STUDENT_INFO
+	WHERE STUDENT_GRADE.STUDENT_ID = STUDENT_INFO.STUDENT_ID
+		  AND STUDENT_INFO.STUDENT_CLASS = N'이과'
+)
+```
+
 
 
