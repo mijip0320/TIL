@@ -532,3 +532,17 @@ if($(선택자).is(":checked") == false){
 }
 ```
 
+
+
+### 🍚jquery로 배열에 있는 중복 값 제거
+
+```javascript
+var origin_data = deptNameList.substring(0, deptNameList.length - 1).split(",");
+var final_data = [];
+
+$.each(origin_data, function (i, value) {
+     if (final_data.indexOf(value) == -1) final_data.push(value);
+});
+
+```
+
