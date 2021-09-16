@@ -546,3 +546,32 @@ $.each(origin_data, function (i, value) {
 
 ```
 
+### 🍍Async: false 일때
+
+```javascript
+$.ajax({
+                //url: "../MeetingService.asmx/cus_calendar_list",
+                url: "../MeetingService.asmx/check_user",
+                type: "post",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    for (var i = 0; i < result.d.length; i++) {
+                        if (result.d[i] == userNow) {
+                            userFlag = true;
+                            break;
+                        } else {
+                            continue;
+                        }
+                    }
+                },
+                error: function (result) {
+                    alert("사용자 권한 체크 error:" + result);
+                }
+```
+
+ajax로 백엔드로 정보를 보낼 때 결과값을 가지고 오기도 전에 다른 함수나 기능이 실행 될 수 도 있음
+
+- 이를 방지하려면 async: false로 설정하면 결과를 받기 전까지(success 또는 error) 다른 기능 실행 X
