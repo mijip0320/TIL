@@ -575,3 +575,15 @@ $.ajax({
 ajax로 백엔드로 정보를 보낼 때 결과값을 가지고 오기도 전에 다른 함수나 기능이 실행 될 수 도 있음
 
 - 이를 방지하려면 async: false로 설정하면 결과를 받기 전까지(success 또는 error) 다른 기능 실행 X
+
+
+
+### 🧁에러 출력
+
+```javascript
+ ajax({ .....
+ error: function (result) {
+                    alert("error: "+result.responseText); //해당 에러 출력해줌
+                }
+```
+
