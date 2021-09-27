@@ -587,3 +587,20 @@ ajax로 백엔드로 정보를 보낼 때 결과값을 가지고 오기도 전�
                 }
 ```
 
+### 🍂배열 내용 remove
+
+```javascript
+var arr = [1, 2, 3, 4, 5, 6];
+
+Array.prototype.remove =
+  Array.prototype.remove ||
+  function() {
+    this.splice(0, this.length);
+  };
+
+arr.remove();
+console.log(arr);
+
+//출력: []
+```
+
