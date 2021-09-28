@@ -604,3 +604,13 @@ console.log(arr);
 //출력: []
 ```
 
+### 🍢해당 태그 값 실시간 변화 감지
+
+```javascript
+ $("#아이디값").on("propertychange change keyup paste input", function () {
+
+          //값의  변화에 따른 act 설정
+
+        });
+```
+
