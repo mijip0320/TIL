@@ -622,3 +622,26 @@ a = 1;
 //초기화를 스트링 타입으로 했어도 다른 값을 넣으면 자동으로 형변환 일어남!!!
 ```
 
+### 🍠배열에 json 정보 추가하기
+
+```javascript
+var data = {
+                    "mgmt_filename": mgmt_data,
+                    "discontinued": dis_data,
+                    "version": version,
+
+                    //추가
+                    "description": description,
+                    "status": status,
+                    "releated_customer": releated_customer,
+                    "deveploper": deveploper,
+                    "dev_date": dev_date,
+                    "issue_no": issue_no
+                };
+
+var dataList = []; 
+
+dataList.push(data);
+//'[{"customer":"ㄴㄴㄴㄴ","fix_type":"hdgdf"}]' 형태로 들어감
+```
+
