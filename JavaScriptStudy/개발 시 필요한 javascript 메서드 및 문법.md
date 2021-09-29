@@ -645,3 +645,6 @@ dataList.push(data);
 //'[{"customer":"ㄴㄴㄴㄴ","fix_type":"hdgdf"}]' 형태로 들어감
 ```
 
+- **추가 시 주의할 점**
+  - push 안쓰고 그냥 concat 쓰면 덧붙여지는 형태, json이 되지 않음 -> dataList는 형변환이 일어날 수도 있음
+  - '{"customer":"ㄴㄴㄴㄴ","fix_type":"hdgdf"},{"customer":"ㄴㄴㄴㄴ","fix_type":"hdgdf"}'
