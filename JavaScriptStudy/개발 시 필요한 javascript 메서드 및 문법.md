@@ -648,3 +648,11 @@ dataList.push(data);
 - **추가 시 주의할 점**
   - push 안쓰고 그냥 concat 쓰면 덧붙여지는 형태, json이 되지 않음 -> dataList는 형변환이 일어날 수도 있음
   - '{"customer":"ㄴㄴㄴㄴ","fix_type":"hdgdf"},{"customer":"ㄴㄴㄴㄴ","fix_type":"hdgdf"}'
+
+### 🍣jquery html 기능 빈칸 추가
+
+```javascript
+$("#아이디값").html("<p>a b c d</p>"); //빈칸 인식 X, abcd 로 출력 됨
+$("#아이디값").html("<p>a&nbsp b&nbsp c&nbsp d</p>"); //&nbsp 추가하면 a b c d로 출력됨
+```
+
