@@ -727,3 +727,55 @@ $("#foo-table").DataTable({
 });
 ```
 
+```javascript
+//컬럼 항목 숨기기
+$("#foo-table").DataTable({
+	// 스크롤바
+	scrollX: true,
+	scrollY: 200,
+
+	// 열 설정
+	columnDefs: [
+		// 1번재 항목 열을 숨김
+		{ targets: 0, visible: false },
+	
+		// 2번째 항목의 넓이를 100px로 설정
+		{ targets: 1, width: 100 }
+	]
+});
+```
+
+```javascript
+//표시 건수 설정
+$("#foo-table").DataTable({
+	// 표시 건수를 10건 단위로 설정
+	lengthMenu: [ 10, 20, 30, 40, 50 ],
+
+	// 기본 표시 건수를 50건으로 설정
+	displayLength: 50, 
+	scrollX: true,
+	scrollY: 200,
+	columnDefs: [
+		{ targets: 0, visible: false },
+		{ targets: 1, width: 100 }
+	]
+});
+```
+
+```javascript
+//페이지 수, 표시 건수, 정렬 상태를 보존하기(stateSave)
+
+//일람 페이지에서 다른 페이지로 이동한 뒤, 다시 원래의 일람 페이지로 돌아오는 경우에 보고 있었던 페이지나 정렬 상태, 표시 건수들을 저장해뒀다가 다시 보여줄 수 있도록 해줍니다.
+
+$("#foo-table").DataTable({
+	// 현재 상태를 보존
+	stateSave: true,
+	scrollX: true,
+	scrollY: 200,
+	columnDefs: [
+		{ targets: 0, visible: false },
+		{ targets: 1, width: 100 }
+	]
+});
+```
+
