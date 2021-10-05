@@ -791,3 +791,6 @@ $("#foo-table").DataTable({
 | 4        | 정보 표시 | 표시 건수 등 여러 정보를 표시               |
 | 5        | 페이징    | 1페이지, 2페이지... 등 페이지를 나눠서 표시 |
 
+https://devmoony.tistory.com/93
+
+https://ponyozzang.tistory.com/220
