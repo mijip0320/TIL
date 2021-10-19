@@ -794,3 +794,32 @@ $("#foo-table").DataTable({
 https://devmoony.tistory.com/93
 
 https://ponyozzang.tistory.com/220
+
+
+
+
+
+### 🍈테이블 행 삭제
+
+```javascript
+<script>
+    function SomeDeleteRowFunction(o) {
+     //no clue what to put here?
+     var p=o.parentNode.parentNode;
+         p.parentNode.removeChild(p);
+    }
+    </script>
+
+    <table>
+       <tr>
+           <td><input type="button" value="Delete Row" onclick="SomeDeleteRowFunction(this)"></td>
+       </tr>
+       <tr>
+           <td><input type="button" value="Delete Row" onclick="SomeDeleteRowFunction(this)"></td>
+       </tr>
+       <tr>
+           <td><input type="button" value="Delete Row" onclick="SomeDeleteRowFunction(this)"></td>
+       </tr>
+    </table>
+```
+
