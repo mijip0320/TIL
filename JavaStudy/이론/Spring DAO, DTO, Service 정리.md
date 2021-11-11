@@ -75,5 +75,75 @@
    }
    ```
 
-   
+3. Service: 비즈니스 로직에 들어가는 부분
 
+   1. Controller가 Request를 받으면 적절한 Service에 전달, 전달받은 Service는 비즈니스 로직을 처리
+   2. DAO로 데이터베이스를 접근, DTO로 데이터를 전달받은 다음, 적절한 처리를 해 반환
+
+   ```java
+   public interface UserService {
+       /**
+        * 유저 정보를 텍스트 파일로 저장한다.
+        * 
+        * @param path 저장할 파일의 경로
+        * @return 저장한 유저의 개수
+        */
+       public int saveUsersAsTextFile(String path);
+   }
+   ```
+
+   ```java
+   @Service("userService")
+   public class UserServiceImpl implements UserService {
+       private static final Logger LOGGER = Logger.getLogger("UserServiceImpl");
+   
+       @Autowired
+       private UserDao userDao;
+   
+       @Override
+       public int saveUsersAsTextFile(String path) {
+           List<User> users = userDao.getUsers();
+   
+           // 비즈니스 로직
+           try (FileOutputStream fileOutputStream = new FileOutputStream(path)) {
+               StringBuilder result = new StringBuilder();
+               for(User user : users) {
+                   result.append(user);
+                   result.append('\n');
+               }
+   
+               fileOutputStream.write(result.toString().getBytes());
+           } catch (IOException exception) {
+               LOGGER.log(Level.SEVERE, "파일을 쓸 수 없습니다.");
+               throw new IllegalStateException(String.format("Can't write a file. path: %s", path));
+           }
+   
+           return users.size();
+       }
+   }
+   ```
+
+   - DAO로부터 DTO 리스트를 받고, DTO의 리스트를 파일로 저장하는 코드
+   - @Autowired annotation으로 userDao bean을 찾아서 연결 -> **DI(Dependency Injection, 의존성 주입)**
+
+```java
+@Controller
+public class MainController {
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping(value = "/save/users", method = RequestMethod.GET)
+    public ModelAndView saveUsers(ModelAndView mv) {
+        // 유저를 얻어와서 텍스트 파일로 저장한다.
+        int saveCount = userService.saveUsersAsTextFile("users.txt");
+
+        // 뷰에서 결과를 보여주기 위해 저장한 개수를 뷰에 넘긴다.
+        mv.addObject("saveCount", saveCount);
+        mv.setViewName("saveUsersResultView");
+
+        return mv;
+    }
+}
+```
+
+ 
