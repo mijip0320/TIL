@@ -986,3 +986,109 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
+### MyBatis 이용해서 설정하기
+
+필요 파일 및 패키지: bean/dto, controller, dao/mapper, service
+
+1. controller: presentation layer
+2. bean/dto : 계층 간 데이터 객체
+3. dao/mapper: 데이터 접근 계층(인터페이스)
+4. service: 비즈니스 계층
+
+src/main/resources/mapper아래 mapper폴더를 만들어 mapper xml파일들 생성(~.xml, 여기에 sql 구문 넣기)<br>
+
+templates아래 html파일 넣기<br>
+
+#### 🥜bean/dto
+
+가져올 column들의 getter와 setter 설정
+
+```java
+public class AttachListBean {
+	private int document_id;
+	private Date document_entry_date;
+	private String document_name;
+	private String document_path;
+	
+	public int getDocument_id() {
+		return document_id;
+	}
+	public void setDocument_id(int document_id) {
+		this.document_id = document_id;
+	}
+	public Date getDocument_entry_date() {
+		return document_entry_date;
+	}
+	public void setDocument_entry_date(Date document_entry_date) {
+		this.document_entry_date = document_entry_date;
+	}
+	public String getDocument_name() {
+		return document_name;
+	}
+	public void setDocument_name(String document_name) {
+		this.document_name = document_name;
+	}
+	public String getDocument_path() {
+		return document_path;
+	}
+	public void setDocument_path(String document_path) {
+		this.document_path = document_path;
+	}
+}
+
+```
+
+#### 🔗dao/mapper
+
+mapper xml파일에 접근 할 파일, 결과값을 가져옴
+
+```java
+public interface AttachListDao {
+
+	public List<AttachListBean> getAttachList();
+}
+```
+
+#### 🧦controller
+
+클라이언트의 요청에 맞는 URL맵핑과 비즈니스 로직을 호출하고 Dispatcher역할
+
+```java
+@Controller
+public class AttachListController {
+	@Autowired
+	AttachListService attachListService;
+	
+	@PostMapping("/attach")	//js에서 ajax로 호출할 때 url 부분을 /attach로 설정!
+	@ResponseBody //포함하지 않으면 @RestController가 아닌 @Controller를 이용해서 getAttachList()의 리턴값을 View값에 매칭하려고 해서 Template 매칭 오류가 발생
+	public List<AttachListBean> getAttachList(Model model, HttpSession session){
+		
+		return attachListService.getAttachList();
+	}
+}
+```
+
+>  @ResponseBody를 포함하지 않으면 `Error resolving template [attach], template might not exist or might not be accessible by any of the configured Template Resolvers] with root cause` 에러 발생
+
+#### 🎭service
+
+dao/mapper를 통해 가져 온 데이터를 프론트엔드로 보냄
+
+```java
+@Service
+public class AttachListService {
+	
+	@Autowired
+	private AttachListDao attachListDao;
+	
+	public List<AttachListBean> getAttachList(){
+		return attachListDao.getAttachList();
+	}
+
+}
+```
+
+
+
+
+
