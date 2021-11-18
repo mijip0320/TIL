@@ -1090,5 +1090,25 @@ public class AttachListService {
 
 
 
+### 파일 삭제
 
+```java
+package testJava; 
+import java.io.File; 
+
+public class SampleProject { 
+    public static void main(String[] args){ 
+        File file = new File("C:/123.txt"); 
+        if( file.exists() ){ 
+            if(file.delete()){ 
+                System.out.println("파일삭제 성공"); 
+            }else{ S
+                ystem.out.println("파일삭제 실패"); 
+                 } 
+        }else{ 
+            System.out.println("파일이 존재하지 않습니다."); 
+        } 
+    } 
+}
+```
 
