@@ -17,7 +17,7 @@
   - src/main/resources/templates : jsp, thymeleaf 같은 동적 파일들
   - src/test/java : 자바 테스트 파일들
   - @SpringBootApplication 클래스의 적정 위치는 디폴트 패키지에 위치
-    - 내부에 선언된 @ComponentScan 어노테이션이 해당 클래스 기준으로 현 위치와 그 아래 위치까 지 스프링 Bean을 나타내는 어노테이션이 선언된 클래스를 찾기 때문
+    - 내부에 선언된 @ComponentScan 어노테이션이 해당 클래스 기준으로 현 위치와 그 아래 위치까지 스프링 Bean을 나타내는 어노테이션이 선언된 클래스를 찾기 때문
     -  @SpringBootApplication  = @SpringBootConfiguration + @ComponentScan + @EnableAutoConfiguration 
 
 - @SpringBootApplication 설정은 Bean을 두 단계로 나눠서 등록
@@ -1110,5 +1110,24 @@ public class SampleProject {
         } 
     } 
 }
+```
+
+### 파일 업로드
+
+```java
+public String storeFile(String dir, MultipartFile file, String fileName, String uuid) throws IOException {
+    //dir : basepath
+    //file : 해당 파일
+    //fileName : 확장자를 뺀 파일명
+    //uuid: uuid이름을 가진 확장자 포함 파일명
+		String fileType = getExt(file.getOriginalFilename());
+		String fileFullName = fileName + fileType;
+		Path targetLocation = Paths.get(dir + "/" + uuid);
+
+		Files.createDirectories(targetLocation);
+
+		Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+		return fileFullName;
+	}
 ```
 
