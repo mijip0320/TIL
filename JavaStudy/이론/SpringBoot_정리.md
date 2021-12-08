@@ -1247,4 +1247,10 @@ class Person {
 
 - Java ORM 기술에 대한 API 표준 명세로, 자바에서 제공하는 API
 - JPA는 자바 어플리케이션에서 RDBMS를 사용하는 방식을 정의한 인터페이스(**라이브러리X**, 구현X)
-- 
+- Spring Data JPA는 JPA를 쓰기 좋게 만들어놓은 모듈
+- JPA interface를 구현해 Repository라는 인터페이스 제공
+- Hibernate는 JPA의 구현체
+- 장저미 CRUD 쿼리를 자동으로 생성, Entity에 속성만 추가해준다면 쿼리를 건들이지 않아도 됨
+- 단저미 상대적으로 학습이 어려움, 복잡한 쿼리 작성이 어려움
+
+> 반복을 줄이고 객체지향적 설계를 위해서는 JPA를 사용하는 것이 JAVA에 조금 더 걸맞는 사용
