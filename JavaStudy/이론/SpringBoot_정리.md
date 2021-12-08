@@ -1131,3 +1131,120 @@ public String storeFile(String dir, MultipartFile file, String fileName, String 
 	}
 ```
 
+### properties 파일 사용법
+
+- application.properties
+
+```properties
+custom.myname=blackdog
+custom.myage=10
+custom.mytel=01000001122
+```
+
+- User 클래스 (런타임에 @Value 태그에 properties에서 설정했던 값들이 들어옴)
+
+```java
+package com.tutorial.springboottutorial;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class User {
+    @Value("${custom.myname}")
+    private String name;
+
+    @Value("${custom.myage}")
+    private int age;
+
+    @Value("${custom.mytel}")
+    private String tel;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", tel='" + tel + '\'' +
+                '}';
+    }
+}
+```
+
+> 만약 properties에 한글이 포함되면 한글 깨짐 현상 일어남, 그래서 한글을 유니코드로 변환하여 properties에 대입 필요
+
+- properties 사용 이유? 배포하고 난 후의 설정을 변경할 때 서버를 내리지 않고 변경해주기 위함(서버 셧 다운을 피하기 위해)
+
+### Lombok?
+
+> 애너테이션을 기반으로 `constructor`, `getter`, `setter` 등 반복적으로 작성해야 하는 메서드를 자동으로 생성하는 라이브러리
+
+- `Model` 이나 `Entity` 같은 도메인 클래스에서 반복되는 코드를 `@` 어노테이션을 이용하여 간단하게 적용할 수 있음
+
+- Lombok을 사용하지 않을 때 코드
+
+```java
+class Person {
+  private String name;
+  private Integer age;
+
+  public Person() { }
+  public Person(String name, Integer age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
+  }
+
+  @Override
+  public String toString() {
+    return "Person{" +
+           "name='" + name + '\'' +
+           "age='" + age + '\'' +
+           '}';
+  }
+}
+```
+
+- Lombok 사용
+
+```java
+@ToString
+@Getter
+@Setter
+class Person {
+  private String name;
+  private Integer age;
+}
+```
+
+### Mybatis VS JPA
+
+> - SQL Mapper: 직접 SQL문을 작성해 DB를 접근 - MyBatis에 해당
+> - ORM(Object Relational Mapping): DB의 데이터를 객체로 매핑시켜 데이터를 접근할 수 있음, SQL을 작성하지 않고도 메소드를 사용해 데이터 조장 가능 - JPA, Hibernate 등에 해당
+
+#### 🎀Mybatis 
+
+- JDBC 라이브러리 제공
+- 학습이 쉽고, 소스코드와 sql을 분리할 수 있음
+- 단점: 반복적인 작업이 이루어질 수 있음
+
+#### 🎁JPA(Java Persistent API)
+
+- Java ORM 기술에 대한 API 표준 명세로, 자바에서 제공하는 API
+- JPA는 자바 어플리케이션에서 RDBMS를 사용하는 방식을 정의한 인터페이스(**라이브러리X**, 구현X)
+- 
