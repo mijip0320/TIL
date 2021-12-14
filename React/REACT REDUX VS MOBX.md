@@ -46,3 +46,93 @@ REDUX:
 ![mobx-redux-layer-table](https://techblog.woowahan.com/wp-content/uploads/img/2019-01-02/mobx-redux-layer.png)
 
 출처: https://techblog.woowahan.com/2599/
+
+
+
+## REDUX
+
+1. 하나의 애플리케이션 안에는 하나의 스토어가 존재
+
+2. 상태는 읽기 전용
+
+   1. state 업데이트 시 setState를 사용하고, 배열을 업데이트 해야 할 때는 배열 자체에 push를 직접하지 않고, concat같은 함수를 사용하여 **기존의 배열을 수정하지 않고 새로운 배열을 만들어서 교체하는 방식으로** 업데이트 진행(Object.assign이나 spread 연산자(`...`)를 사용해서 업데이트)
+
+   2. spread 연산자?
+
+      1. 배열의 복제
+
+      ```react
+      var array = [1,2,3,4,5];
+      var newArray = [];
+      for(var i=0; i<array.length; i++){
+      	newArray[i] = array[i];
+      }
+      
+      //위 로직을 아래 spread연산자를 이용해 복제 표현 가능
+      const newArray = [...array];
+      ```
+
+      2. 배열 병합
+
+      ```react
+      const arrayA = [1,2,3];
+      const arrayB = [4,5,6];
+      
+      const arrayC = [...arrayA, ...arrayB];
+      console.log(arrayC);//[1,2,3,4,5,6];
+      ```
+
+      3. 객체에서도 동일
+
+      ```react
+      const objA= {a:1, b:2};
+      const objB = {...objA};
+      
+      console.log(objB);// {a:1, b:2}
+      ```
+
+      	4. 특정 값만 변경
+
+      ```react
+      //주로 리액트에서 state 관리할 때 불변성을 유지하며 객체 중 일부만 update를 해야할 때 사용
+      const objA = {a:1, b:2, c:3};
+      const objB = {...objA, b:4}; //objA 복제 후, b 속성만 덮어씀
+      console.log(objB); //{a:1, b:4, c:3}
+      ```
+
+      ```react
+      const object = {
+          a: {
+              b: {
+                  target:123,
+                  c:"cc"
+              },
+              d:"dd"
+          },
+          e:"ee"
+      }
+      
+      //a,b,c,d,e는 그대로 두고 target만 변경
+      const newObject = {
+          ...object,
+          a:{
+              ...object.a,
+              b:{
+                  ...object.a.b,
+                  target:456
+              }
+          }
+      };
+      ```
+
+   3.  변화를 일으키는 함수 리듀서는 순수한 함수여야 함
+
+      1. 순수한 함수란? 
+         1. 리듀서 함수는 이전상태와 액션 객체를 파라미터로 받음
+         2. 이전 상태는 절대 건들이지 않고 변화를 일으킨 새로운 상태 객체를 만들어서 반환
+         3. 똑같은 파라미터로 호출된 리듀서 함수는 **언제나** 똑같은 결과값을 반환
+      2. 순수한 함수 x?
+         1. new Date() 사용, 랜던숫자 생성, 네트워크 요청...
+         2. 이럴 때 리덕스 미들웨어 사용
+      3. 
+
